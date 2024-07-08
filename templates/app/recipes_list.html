@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipes</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <h1>Recipe List</h1>
+
+    <table border="1" cellpadding="5" cellspacing="5">
+        <tr>
+            <td>Recipe Title</td>
+            <td>Recipe Image</td>
+        </tr>
+        {% for object in object_list %}
+        <tr>
+            <td><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></td>
+            <td><img src="{{ object.pic.url }}" width="150" height="200" /></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
