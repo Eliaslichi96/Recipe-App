@@ -12,23 +12,63 @@
             background-size: cover;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             color: #fff;
             text-align: center;
         }
 
-        .title {
-            position: absolute;
-            top: 20px;
+        header {
             width: 100%;
             text-align: center;
-            font-size: 3rem;
+            padding: 20px 0;
+        }
+
+        nav {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
+            background-color: #ff6347;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #ff4500;
+        }
+
+        nav ul li:last-child {
+            margin-left: auto;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .button-holder {
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
 
         .recipe-button {
@@ -48,9 +88,18 @@
 </head>
 
 <body>
-    <h1 class="title">Welcome to my Recipe App</h1>
-    <div class="button-holder">
-        <a href="{% url 'recipes:recipes-list' %}" class="recipe-button">View Recipes</a>
+    <header>
+        <h1>Welcome to my Recipe App</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'login' %}">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="button-holder">
+            <a href="{% url 'recipes:recipes-list' %}" class="recipe-button">View Recipes</a>
+        </div>
     </div>
 </body>
 
