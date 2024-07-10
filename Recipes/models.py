@@ -12,7 +12,7 @@ class Recipe(models.Model):
     pic = models.ImageField(upload_to="recipes", default="no_picture")
 
     def __str__(self):
-        return f"{self.name} - {self.difficulty} - {self.cooking_time}"
+        return self.name
 
     def get_absolute_url(self):
         return reverse("recipes:detail", kwargs={"pk": self.pk})
