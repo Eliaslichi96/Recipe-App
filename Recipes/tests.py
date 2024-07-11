@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from .models import Recipe
+from django.contrib.auth.models import User
 
 class RecipeModelTest(TestCase):
     def test_string_representation(self):
@@ -20,10 +21,13 @@ class RecipeViewTest(TestCase):
                 difficulty="Easy",
                 pic="recipes/no_picture"
             )
+        
+        # Create a user for login
+        cls.test_user = User.objects.create_user(username='testuser', password='12345')
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get(reverse('recipes:recipes-list'))
-        self.assertRedirects(response, '/accounts/login/?next=/recipes/')
+        self.assertRedirects(response, '/login/?next=/recipes/')
 
     def test_logged_in_uses_correct_template(self):
         self.client.login(username='testuser', password='12345')
