@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from .models import Recipe
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .forms import RecipesSearchForm
+from .forms import RecipesSearchForm, RecipeForm
 import matplotlib.pyplot as plt
 import io
 import urllib, base64
@@ -20,6 +20,13 @@ class RecipeListView(LoginRequiredMixin, ListView):
 class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = "app/recipes_details.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recipe = self.get_object()
+        context['ingredients_list'] = recipe.ingredients.split(',')
+        return context
+    
 
 def records(request):
     form = RecipesSearchForm(request.POST or None)
@@ -81,3 +88,18 @@ def get_chart():
     string = base64.b64encode(buf.read())
     uri = urllib.parse.quote(string)
     return uri
+
+def recipe_create_view(request):
+    form = RecipeForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        form.save()
+        return redirect('recipes:recipes-list')
+    return render(request, 'app/recipe_form.html', {'form': form})
+
+def recipe_edit_view(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+    form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
+    if form.is_valid():
+        form.save()
+        return redirect('recipes:detail', pk=pk)
+    return render(request, 'app/recipe_form.html', {'form': form})

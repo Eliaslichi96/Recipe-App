@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +13,14 @@
 </head>
 
 <body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'recipes:home' %}">Home</a></li>
+            <li><a href="{% url 'recipes:recipes-list' %}">Recipe List</a></li>
+            <li><a href="{% url 'recipes:recipe-create' %}">Create Recipe</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
     <div class="flex-container">
         <div class="center-div">
             <div class="recipes-container-details">
@@ -26,8 +33,12 @@
                     <p class="details-description">{{ object.description }}</p>
                 </div>
                 <div class="ingredients-details">
-                    <p class="ingredients-details-list"><span class="sub-header">Ingredients: </span>{{
-                        object.ingredients }}</p>
+                    <p class="ingredients-details-list"><span class="sub-header">Ingredients: </span></p>
+                    <ul>
+                        {% for ingredient in ingredients_list %}
+                        <li>{{ ingredient }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="time-and-difficulty">
                     <p><span class="sub-header">Cooking Time: </span>{{ object.cooking_time }} mins</p>
